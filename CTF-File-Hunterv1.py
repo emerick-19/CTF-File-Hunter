@@ -4,7 +4,7 @@ import hashlib
 import sys
 import signal
 
-# Configuration des couleurs ANSI
+
 C_BLUE    = "\033[38;5;39m"
 C_GREEN   = "\033[38;5;76m"
 C_RED     = "\033[38;5;196m"
@@ -27,8 +27,8 @@ def get_hash(path):
         return "----------"
 
 def security_interrupt_handler(sig, frame):
-    print(f"\n\n  {C_RED}[!!!] ARRÊT D'URGENCE INTERACTIF : (Ctrl+C) détecté.{RESET}")
-    print(f"  {C_YELLOW}[*] Kill-switch activé. Retour au terminal actif.{RESET}\n")
+    print(f"\n\n  {C_RED}[!!!] INTERACTIF STOP : (Ctrl+C) détected.{RESET}")
+    print(f"  {C_YELLOW}[*] Kill-switch activated. Return to terminal.{RESET}\n")
     sys.exit(0)
 
 def print_header(targets):
@@ -37,24 +37,24 @@ def print_header(targets):
         targets_str = targets_str[:36] + "..."
     banner = f"""
 {C_CYAN}┌────────────────────────────────────────────────────────┐
-│ {C_BLUE}🎯 CTF LOOT HUNTER (v1.3 Smart Target)      {C_CYAN}         │
-│ {C_GRAY}Zones explorées : {targets_str:<37}{C_CYAN} │
+│ {C_BLUE}🎯 CTF FILE HUNTER (v1.3 Smart Target)      {C_CYAN}         │
+│ {C_GRAY}Zones Explor : {targets_str:<37}{C_CYAN} │
 └────────────────────────────────────────────────────────┘{RESET}"""
     print(banner)
 
 def scan():
     signal.signal(signal.SIGINT, security_interrupt_handler)
 
-    # DÉTECTION AUTOMATIQUE SMART
-    # Si l'utilisateur donne un argument (ex: /home/emerick), on prend ça.
+    
+    
     if len(sys.argv) > 1:
         target_dirs = [os.path.abspath(sys.argv[1])]
     else:
-        # Sinon, s'il fait juste "python3 F-H.py", on scanne automatiquement les dossiers intéressants existants
+        
         potential_targets = ['/home', '/root', '/var/www', '/tmp', '/opt']
         target_dirs = [d for d in potential_targets if os.path.exists(d)]
         
-        # Secours si on est dans un environnement restreint ou non-standard
+        
         if not target_dirs:
             pwd_env = os.environ.get('PWD')
             target_dirs = [pwd_env if pwd_env else os.getcwd()]
@@ -62,7 +62,7 @@ def scan():
     print_header(target_dirs)
 
     try:
-        # On boucle à travers toutes les cibles définies (une ou plusieurs)
+        
         for base_dir in target_dirs:
             for root, _, files in os.walk(base_dir):
                 if any(x in root for x in ['/proc', '/sys', '/dev', '.git', '__pycache__', '/var/lib/docker']):
@@ -71,10 +71,10 @@ def scan():
                 valid_files = [f for f in files if f.lower().endswith(EXTENSIONS)]
                 
                 if valid_files:
-                    # Correction du bug d'affichage de la v3.7 (root est utilisé proprement)
-                    print(f"\n{C_BLUE}📂 Dossier détecté : {root}{RESET}")
+                    
+                    print(f"\n{C_BLUE}📂 Directory détect : {root}{RESET}")
                     print(f"  {C_CYAN}┌──────┬────────────┬────────────────────────────────────────────────────────┬────────────────────┐{RESET}")
-                    print(f"  {C_CYAN}│{RESET} ACC  {C_CYAN}│{RESET} SHA256     {C_CYAN}│{RESET} NOM DU FICHIER                                          {C_CYAN}│{RESET} ALERTE / MATCH      {C_CYAN}│{RESET}")
+                    print(f"  {C_CYAN}│{RESET} ACC  {C_CYAN}│{RESET} SHA256     {C_CYAN}│{RESET} FILE NAME                                          {C_CYAN}│{RESET} ALERTE / MATCH      {C_CYAN}│{RESET}")
                     print(f"  {C_CYAN}├──────┼────────────┼────────────────────────────────────────────────────────┼────────────────────┤{RESET}")
 
                     for f in valid_files:
