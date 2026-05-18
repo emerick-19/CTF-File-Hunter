@@ -3,7 +3,7 @@ import re
 import hashlib
 import sys
 
-# Configuration des couleurs ANSI (Compatibilité universelle)
+
 C_BLUE    = "\033[38;5;39m"
 C_GREEN   = "\033[38;5;76m"
 C_RED     = "\033[38;5;196m"
@@ -58,7 +58,7 @@ def scan():
 
     for folder, files in tree_data.items():
         print(f"\n{C_BLUE}📂 Dossier : {folder}{RESET}")
-        # Structure de la boîte parfaitement calibrée
+        
         print(f"  {C_CYAN}┌──────┬────────────┬────────────────────────────────────────────────────────┬────────────────────┐{RESET}")
         print(f"  {C_CYAN}│{RESET} ACC  {C_CYAN}│{RESET} SHA256     {C_CYAN}│{RESET} NOM DU FICHIER                                          {C_CYAN}│{RESET} ALERTE / MATCH      {C_CYAN}│{RESET}")
         print(f"  {C_CYAN}├──────┼────────────┼────────────────────────────────────────────────────────┼────────────────────┤{RESET}")
@@ -81,10 +81,10 @@ def scan():
                 except:
                     pass
             
-            # Formatage de la section Alerte (Tronquage strict si trop long pour éviter les déformations)
+            
             if alerts:
                 raw_alert_text = ", ".join(alerts)
-                if len(raw_alert_text) > 15: # 15 car [!!] + espace prend déjà 5 caractères
+                if len(raw_alert_text) > 15: 
                     raw_alert_text = raw_alert_text[:12] + "..."
                 alert_str = f"{C_RED}[!!]{RESET} {raw_alert_text}"
                 alert_len = 5 + len(raw_alert_text)
@@ -92,7 +92,7 @@ def scan():
                 alert_str = f"{C_GRAY}Aucun{RESET}"
                 alert_len = 5
 
-            # Limitation stricte du nom du fichier
+            
             if len(f) > 54:
                 display_name = f[:51] + "..."
             else:
@@ -101,7 +101,7 @@ def scan():
             space_name = 54 - len(display_name)
             space_alert = 20 - alert_len
 
-            # Concaténation de la ligne avec retraits exacts
+            
             line = (
                 f"  {C_CYAN}│{RESET} {status} {C_CYAN}│{RESET} {C_GRAY}{f_hash}{RESET} {C_CYAN}│{RESET} "
                 f"{display_name}" + " " * space_name + f" {C_CYAN}│{RESET} "
