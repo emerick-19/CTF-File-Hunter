@@ -42,9 +42,10 @@
 
 
 
-Outil d'énumération récursive et d'exfiltration pour Pentest et CTF
+#Outil d'énumération récursive et d'exfiltration pour Pentest et CTF
 
 
+loot-hunter is use for real exfiltration. It can be use on a CTF but you cant interrupt it. That's the reason why is more for Pentesting. I creat CTF-File-Hunterv1 for CTF exfiltration
 
 usage:
 
@@ -52,6 +53,7 @@ usage:
 
 python3 loot-hunter.py
 
+python CTF-File-Hunterv1.py
 
 usage:
 #Here you need to precise the path 
